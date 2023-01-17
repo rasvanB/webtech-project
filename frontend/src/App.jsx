@@ -1,8 +1,14 @@
 import { css } from "@emotion/css";
 import "./app.scss";
-import Role from "./components/role";
+import { useAtom } from "jotai";
+import { loggedInAtom, userAtom } from "./utils/jotai";
+import SelectionForm from "./components/selection-form";
+import ProfessorBoard from "./components/professor-board";
+import StudentModal from "./components/student-modal";
 
-function App() {
+const App = () => {
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [user] = useAtom(userAtom);
   return (
     <div className="App">
       <div
@@ -14,39 +20,18 @@ function App() {
           align-items: center;
         `}
       >
-        <div
-          className={css`
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.15);
-          `}
-        >
-          <h1
-            className={css`
-              font-weight: 700;
-            `}
-          >
-            Select your role
-          </h1>
-          <div
-            className={css`
-              display: flex;
-              justify-content: space-around;
-              margin-bottom: 15px;
-              margin-top: 20px;
-            `}
-          >
-            <Role iconName="noto:man-teacher" title="Professor" />
-            <Role iconName="noto:man-student" title="Student" />
-          </div>
-        </div>
+        {loggedIn ? (
+          user.role === "professor" ? (
+            <ProfessorBoard />
+          ) : (
+            <StudentModal />
+          )
+        ) : (
+          <SelectionForm />
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default App;
