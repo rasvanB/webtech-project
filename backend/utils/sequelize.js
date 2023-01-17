@@ -4,10 +4,23 @@ const sequelize = new Sequelize({
   storage: "./db/mydb.db",
 });
 
+const Professor = sequelize.define("professor", {
+  name: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    unique: true,
+    allowNull: false,
+  },
+});
+
 const Activity = sequelize.define("activity", {
   date: Sequelize.DATE,
   description: Sequelize.STRING,
-  accessCode: Sequelize.INTEGER,
+  accessCode: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    unique: true,
+  },
   title: Sequelize.STRING,
   professorName: {
     type: Sequelize.STRING,
@@ -15,15 +28,6 @@ const Activity = sequelize.define("activity", {
       model: "professors",
       key: "name",
     },
-  },
-});
-
-const Professor = sequelize.define("professor", {
-  name: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-    unique: true,
-    allowNull: false,
   },
 });
 
@@ -35,7 +39,7 @@ const Feedback = sequelize.define("feedback", {
     type: Sequelize.INTEGER,
     references: {
       model: "activities",
-      key: "id",
+      key: "accessCode",
     },
   },
 });
@@ -55,7 +59,6 @@ Feedback.belongsTo(Activity, {
 Activity.hasMany(Feedback, {
   foreignKey: "activityId",
 });
-
 module.exports = {
   sequelize,
   Activity,
