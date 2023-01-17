@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import { Icon } from "@iconify/react";
 
-const Role = ({ iconName, title }) => {
+const Role = ({ iconName, title, handleClick }) => {
   return (
     <div
       className={css`
@@ -14,11 +14,16 @@ const Role = ({ iconName, title }) => {
         font-weight: 600;
         width: 100px;
         border-radius: 5px;
-        border: 1px solid #c6dae2;
+        outline: 2px solid #b4b7b8;
         &:hover {
           cursor: pointer;
+          outline: 3px solid #b4b7b8;
+        }
+        &:active {
+          outline: 4px solid #b4b7b8;
         }
       `}
+      onClick={handleClick}
     >
       <Icon
         icon={iconName}
