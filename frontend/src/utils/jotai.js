@@ -6,3 +6,4 @@ export const userAtom = atom({
 });
 export const loggedInAtom = atom(false);
 export const activitiesAtom = atom([]);
+export const studentActivityAtom = atom();
